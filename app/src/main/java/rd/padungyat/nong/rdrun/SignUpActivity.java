@@ -1,7 +1,10 @@
 package rd.padungyat.nong.rdrun;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -40,6 +43,23 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
+                switch (checkedId) {
+                    case R.id.radioButton:
+                        avataString = "0";
+                        break;
+                    case R.id.radioButton2:
+                        avataString = "1";
+                        break;
+                    case R.id.radioButton3:
+                        avataString = "2";
+                        break;
+                    case R.id.radioButton4:
+                        avataString = "3";
+                        break;
+                    case R.id.radioButton5:
+                        avataString = "4";
+                        break;
+                }
             }
         });
 
@@ -59,9 +79,63 @@ public class SignUpActivity extends AppCompatActivity {
             //True
             MyAlert myAlert = new MyAlert();
             myAlert.myDialog(this,R.drawable.nobita48, "มีช่องว่าง","กรุณากรอกทุกช่อง ครับผม");
+        } else if (checkChoose()) {
+            //True ==> Have Choose
+            comfirmValue();
+        } else {
+            //False ==> Not Choose
+            MyAlert myAlert = new MyAlert();
+            myAlert.myDialog(this,R.drawable.doremon48,"ยังไม่เลือก Avata","กรุณาเลือกครับ");
         }
 
     }//clickSign
+
+    private void comfirmValue() {
+
+        MyConstant myConstant = new MyConstant();
+        int[] avataInts = myConstant.getAvataInts();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setIcon(avataInts[Integer.parseInt(avataString)]);
+        builder.setTitle("โปรดตรวจสอบข้อมูล");
+        builder.setMessage("Name = " + nameString + "\n" +
+        "Surname = " + surnameString + "\n" +
+        "User = " + userString + "\n" +
+        "Password = " + passwordString);     // \n คือให้ขี้นบรรทัดใหม่
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                uploadValueToServer();
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }//confirmValue
+
+    private void uploadValueToServer() {
+
+    }
+
+    private boolean checkChoose() {
+
+        boolean result = false;
+        if (avata1RadioButton.isChecked() ||
+                avata2RadioButton.isChecked() ||
+                avata3RadioButton.isChecked() ||
+                avata4RadioButton.isChecked() ||
+                avata5RadioButton.isChecked()) {
+            result = true;
+        }
+
+        //Log.d("30AugV1", "result ==> " + result);
+        return result;
+    }
 
     private boolean checkSpace() {
 
