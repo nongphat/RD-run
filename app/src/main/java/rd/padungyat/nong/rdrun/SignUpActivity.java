@@ -64,6 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
                 userString.equals("") ||
                 passwordString.equals("")) {
             result  = true;
+
         }
         return result;
     }
