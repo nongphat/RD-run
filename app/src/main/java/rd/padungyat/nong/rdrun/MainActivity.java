@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 public class MainActivity extends AppCompatActivity {
 
     //Explicit การประกาศตัวแปร
@@ -23,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView6);
         userEditText = (EditText) findViewById(R.id.editText5);
         passwordEditText = (EditText) findViewById(R.id.editText6);
+
+        //Load Image from Server
+        Picasso.with(this).load("http://swiftcodingthai.com/rd/image/rd_logo.png")
+                .resize(150,150).into(imageView);
 
 
     } //Main Method นี่คือ Method ซึ่งจะเก็บ Statement ไว้ (ต.ย.นี้มีทั้งหมด 2 statement)
