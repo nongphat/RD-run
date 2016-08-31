@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     //Explicit การประกาศตัวแปร
     private ImageView imageView;
     private EditText userEditText, passwordEditText;
+    private String userString, passwordString;
 
 
     @Override
@@ -34,6 +35,18 @@ public class MainActivity extends AppCompatActivity {
     } //Main Method นี่คือ Method ซึ่งจะเก็บ Statement ไว้ (ต.ย.นี้มีทั้งหมด 2 statement)
 
     public void clickSignInMain(View view) {
+        userString = userEditText.getText().toString().trim();
+        passwordString = passwordEditText.getText().toString().trim();
+
+        //Check Space
+        if (userString.equals("") || passwordString.equals("")) {
+            //Have Space
+            MyAlert myAlert = new MyAlert();
+            myAlert.myDialog(this,R.drawable.rat48,"ท่านกรอกข้อมูลไม่ครบ","กรุณากรอกข้อมูลให้ครบ ครับ");
+        } else {
+            //No Space
+        }
+
 
     }// clickSignIn
 
