@@ -28,8 +28,8 @@ public class SignUpActivity extends AppCompatActivity {
     private RadioButton avata1RadioButton, avata2RadioButton, avata3RadioButton, avata4RadioButton,
             avata5RadioButton;
     private String nameString,surnameString,userString, passwordString,avataString;
-    private static final String urlPHP = "http://swiftcodingthai.com/rd/add_user_nongphat.php";
-
+    //private static final String urlPHP = "http://swiftcodingthai.com/rd/add_user_master.php";
+    private static final String urlPHP = "http://swiftcodingthai.com/rd/add_user_nongphat_31Aug.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +133,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         OkHttpClient okHttpClient = new OkHttpClient();
         // isAdd เป็นตัวแปรฝั่ง PHP
-        RequestBody requestBody = new FormEncodingBuilder()
+        final RequestBody requestBody = new FormEncodingBuilder()
                 .add("isAdd", "true")
                 .add("Name", nameString)
                 .add("Surname", surnameString)
@@ -152,6 +152,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Response response) throws IOException {
+                Log.d("31AugV1", "Result ==> " + response.body().string());
                 finish();
             }
         });
