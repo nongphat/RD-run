@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     //User False
                     MyAlert myAlert = new MyAlert();
                     myAlert.myDialog(context,R.drawable.kon48,
-                            "User False","ไม่มี"+ myUserString + "ในฐานข้อมูลของเรา");
+                             "User False","ไม่มี"+ myUserString + "ในฐานข้อมูลของเรา");
                 } else if (mypasswordString.equals(truePasswordString)) {
                     //Password True
                     Toast.makeText(context,"Welcome"+ nameString +" " + surnameString,
