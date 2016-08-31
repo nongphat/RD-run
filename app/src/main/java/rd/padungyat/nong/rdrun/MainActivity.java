@@ -9,11 +9,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private EditText userEditText, passwordEditText;
     private String userString, passwordString;
+
 
 
     @Override
@@ -45,10 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Explicit
         private Context context;
-        private String myUserString, mypasswordString;
+        private String myUserString, mypasswordString,
+                truePasswordString, nameString , surnameString, idString;
         //private static final String urlJSON = "http://swiftcodingthai.com/rd/get_user_nongphat.php";
         private static final String urlJSON = "http://swiftcodingthai.com/rd/get_user_master.php";
-
+        private boolean statusABoolean = true;
 
         public SynUser(Context context, String myUserString, String mypasswordString) {
             this.context = context;
@@ -78,7 +84,40 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(s);
 
             Log.d("31AugV2", "JsoN ==> " + s);
+            try {
 
+                JSONArray jsonArray = new JSONArray(s);
+                for (int i=0; i<jsonArray.length(); i+=1) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    if (myUserString.equals(jsonObject.getString("User"))) {
+                        statusABoolean = false;
+                        truePasswordString = jsonObject.getString("Password");
+                        nameString = jsonObject.getString("Name");
+                        surnameString = jsonObject.getString("Surname");
+                        idString = jsonObject.getString("id");
+
+                    }//if
+                }//for loop
+
+                if (statusABoolean) {
+                    //User False
+                    MyAlert myAlert = new MyAlert();
+                    myAlert.myDialog(context,R.drawable.kon48,
+                            "User False","ไม่มี"+ myUserString + "ในฐานข้อมูลของเรา");
+                } else if (mypasswordString.equals(truePasswordString)) {
+                    //Password True
+                    Toast.makeText(context,"Welcome"+ nameString +" " + surnameString,
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    //Password False
+                    MyAlert myAlert = new MyAlert();
+                    myAlert.myDialog(context,R.drawable.bird48,"รหัสผ่านไม่ถูกต้อง",
+                            "กรุณาใส่รหัสผ่านใหม่");
+                }
+
+            } catch (Exception e) {
+                Log.d("31AugV3", "e onPost ==> " + e.toString());
+            }
 
         }// onPost
     }// SynUser Class
